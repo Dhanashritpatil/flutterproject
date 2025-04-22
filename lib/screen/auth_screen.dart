@@ -2,6 +2,15 @@ import 'package:flutter/material.dart';
 import 'church_locatoe.dart';
 import 'recpite.dart';
 import 'holy_bible.dart';
+import 'daily_mana_screen.dart';
+import 'Donation.dart';
+import 'kids_corner.dart';
+import 'prayer_request.dart';
+import 'refer&earn.dart';
+import 'songs_book.dart';
+import 'church.dart';
+import 'songs.dart';
+import 'home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,7 +32,7 @@ class MyApp extends StatelessWidget {
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
 
-  @override 
+  @override
   State<AuthScreen> createState() => _AuthScreenState();
 }
 
@@ -51,7 +60,7 @@ class _AuthScreenState extends State<AuthScreen> {
     if (email == 'Demo' && password == '123456') {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) =>  LanguageSelectionScreen()),
+        MaterialPageRoute(builder: (_) => HomePage()),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(

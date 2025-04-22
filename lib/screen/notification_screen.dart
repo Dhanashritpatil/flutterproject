@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screen/home_screen.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
@@ -10,7 +11,17 @@ class NotificationScreen extends StatelessWidget {
         centerTitle: true,
         title: const Text('Notification'),
         leading: const Icon(Icons.arrow_back),
-        actions: const [Icon(Icons.home_outlined), SizedBox(width: 12)],
+        actions: [
+          IconButton(
+              icon: Icon(Icons.home_outlined), //SizedBox(width: 12),
+              color: Colors.deepOrange,
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (_) => HomePage()),
+                );
+              })
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -65,7 +76,8 @@ class _SearchBar extends StatelessWidget {
               filled: true,
               fillColor: Colors.white,
               contentPadding: const EdgeInsets.all(12),
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
             ),
           ),
         ),
@@ -112,7 +124,8 @@ class _MessageHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: const [
-        Text('Latest Messages', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        Text('Latest Messages',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         Icon(Icons.filter_list),
       ],
     );
@@ -153,8 +166,11 @@ class _MessageCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(username, style: const TextStyle(fontWeight: FontWeight.bold)),
-                    Text(time, style: TextStyle(color: Colors.grey.shade600, fontSize: 12)),
+                    Text(username,
+                        style: const TextStyle(fontWeight: FontWeight.bold)),
+                    Text(time,
+                        style: TextStyle(
+                            color: Colors.grey.shade600, fontSize: 12)),
                   ],
                 ),
                 const Spacer(),

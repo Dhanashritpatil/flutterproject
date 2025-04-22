@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'home_screen.dart';
 
 class EventsScreen extends StatelessWidget {
   const EventsScreen({super.key});
@@ -18,10 +19,18 @@ class EventsScreen extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        actions: const [
-          Icon(Icons.home_outlined),
-          SizedBox(width: 12),
-        ],
+       actions: [
+          IconButton(
+              icon: Icon(Icons.home_outlined), //SizedBox(width: 12),
+              color: Colors.deepOrange,
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (_) => HomePage()),
+                );
+              })
+      
+       ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),

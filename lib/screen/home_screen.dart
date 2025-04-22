@@ -1,212 +1,171 @@
 import 'package:flutter/material.dart';
+import 'notification_screen.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Church Connect',
-      theme: ThemeData(primarySwatch: Colors.orange, useMaterial3: true),
-      home: const HomeScreen(),
-    );
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
-  void navigateTo(BuildContext context, Widget screen) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => screen),
-    );
-  }
+class HomePage extends StatelessWidget {
+  final List<_GridItem> gridItems = [
+    _GridItem("Church Locator", Icons.location_on, '/churchLocator'),
+    _GridItem("Holy Bible Access", Icons.menu_book, '/holybible'),
+    _GridItem("Daily Manna", Icons.book, '/dailymanna'),
+    _GridItem("Prayer Requests", Icons.message, '/prayer'),
+    _GridItem("Songs Book", Icons.library_music, '/songbook '),
+    _GridItem("Videos", Icons.video_library, '/videos'),
+    _GridItem("Refer and Earn", Icons.card_giftcard, '/referrs'),
+    _GridItem("Donate", Icons.volunteer_activism, '/donation'),
+    _GridItem("Christian Matrimony", Icons.favorite, '/matrimony'),
+    _GridItem("Christian Shopping", Icons.shopping_cart, '/shopping'),
+    _GridItem("Bible School", Icons.school, '/bibleSchool'),
+    _GridItem("Bible Quiz", Icons.quiz, '/bibleQuiz'),
+    _GridItem("Ask Bible TH", Icons.chat, '/askBibleTH'),
+    _GridItem("Kid’s Corner", Icons.child_care, '/kidscorner'),
+    _GridItem("Songs", Icons.music_note, '/songs'),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.orange,
-        title: const Text(
-          'Church Connect',
-          style: TextStyle(color: Colors.white),
-        ),
-        centerTitle: true,
+        title: Text("Praise The Lord..."),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.notifications),
+              color: Colors.deepOrange,
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (_) => NotificationScreen()),
+                );
+              })
+        ],
+        leading: IconButton(
+            icon: Icon(Icons.person),
+            color: Colors.deepOrange,
+            onPressed: () {}),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: GridView.count(
-          crossAxisCount: 2,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
-          children: [
-            HomeGridItem(
-              title: 'Church Locator',
-              imagePath: 'assets/church.png',
-              onTap: () => navigateTo(context, const ChurchLocatorScreen()),
-            ),
-            HomeGridItem(
-              title: 'Daily Manna',
-              imagePath: 'assets/manna.png',
-              onTap: () => navigateTo(context, const DailyMannaScreen()),
-            ),
-            HomeGridItem(
-              title: 'Songs Book',
-              imagePath: 'assets/songs.png',
-              onTap: () => navigateTo(context, const SongsBookScreen()),
-            ),
-            HomeGridItem(
-              title: 'Events',
-              imagePath: 'assets/events.png',
-              onTap: () => navigateTo(context, const EventsScreen()),
-            ),
-            HomeGridItem(
-              title: 'Notifications',
-              imagePath: 'assets/notifications.png',
-              onTap: () => navigateTo(context, const NotificationsScreen()),
-            ),
-            HomeGridItem(
-              title: 'About Us',
-              imagePath: 'assets/about.png',
-              onTap: () => navigateTo(context, const AboutUsScreen()),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class HomeGridItem extends StatelessWidget {
-  final String title;
-  final String imagePath;
-  final VoidCallback onTap;
-
-  const HomeGridItem({
-    super.key,
-    required this.title,
-    required this.imagePath,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.orange.shade50,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.orange.shade100,
-              blurRadius: 8,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              imagePath,
-              width: 60,
-              height: 60,
-              fit: BoxFit.contain,
-            ),
-            const SizedBox(height: 10),
-            Text(
-              title,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            children: [
+              _buildRaiseHandBanner(context),
+              const SizedBox(height: 12),
+              GridView.builder(
+                itemCount: gridItems.length,
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                  childAspectRatio: 0.9,
+                ),
+                itemBuilder: (context, index) {
+                  final item = gridItems[index];
+                  return GestureDetector(
+                    onTap: () => Navigator.pushNamed(context, item.route),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).cardColor,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 4,
+                            offset: Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(item.icon, size: 24, color: Colors.deepOrange),
+                          const SizedBox(height: 6),
+                          Text(
+                            item.title,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 10),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
               ),
-            )
-          ],
+              const SizedBox(height: 20),
+              _buildBottomButtons(),
+            ],
+          ),
         ),
       ),
     );
   }
-}
 
-// Dummy Screens (replace with your actual page widgets)
-class ChurchLocatorScreen extends StatelessWidget {
-  const ChurchLocatorScreen({super.key});
+  Widget _buildRaiseHandBanner(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 5)],
+      ),
+      child: Column(
+        children: [
+          Text(
+            "Raise Hand For Church...",
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            "Get the churches connected more\nBring the awareness of online services",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 11),
+          ),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              Icon(Icons.arrow_back_ios, size: 16),
+              Icon(Icons.arrow_forward_ios, size: 16),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 
-  @override
-  Widget build(BuildContext context) {
-    return  Scaffold(
-      appBar: AppBar(title: Text('Church Locator')),
-      body: Center(child: Text('Church Locator Page')),
+  Widget _buildBottomButtons() {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange),
+                child: Text("Logout")),
+            ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange),
+                child: Text("Contact Us")),
+          ],
+        ),
+        const SizedBox(height: 8),
+        ElevatedButton(
+          onPressed: () {},
+          style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
+          child: Text("Terms and Conditions"),
+        ),
+      ],
     );
   }
 }
 
-class DailyMannaScreen extends StatelessWidget {
-  const DailyMannaScreen({super.key});
+class _GridItem {
+  final String title;
+  final IconData icon;
+  final String route;
 
-  @override
-  Widget build(BuildContext context) {
-    return  Scaffold(
-      appBar: AppBar(title: Text('Daily Manna')),
-      body: Center(child: Text('Daily Manna Page')),
-    );
-  }
-}
-
-class SongsBookScreen extends StatelessWidget {
-  const SongsBookScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return  Scaffold(
-      appBar: AppBar(title: Text('Songs Book')),
-      body: Center(child: Text('Songs Book Page')),
-      
-    );
-  }
-}
-
-class EventsScreen extends StatelessWidget {
-  const EventsScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return  Scaffold(
-      appBar: AppBar(title: Text('Events')),
-      body: Center(child: Text('Events_screen')),
-    );
-  }
-}
-
-class NotificationsScreen extends StatelessWidget {
-  const NotificationsScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return  Scaffold(
-      appBar: AppBar(title: Text('Notifications')),
-      body: Center(child: Text('Notifications Page')),
-    );
-  }
-}
-
-class AboutUsScreen extends StatelessWidget {
-  const AboutUsScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return  Scaffold(
-      appBar: AppBar(title: Text('About Us')),
-      body: Center(child: Text('About Us Page')),
-    );
-  }
+  _GridItem(this.title, this.icon, this.route);
 }

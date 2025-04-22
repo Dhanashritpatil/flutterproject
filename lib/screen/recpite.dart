@@ -4,6 +4,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:path_provider/path_provider.dart';
 import 'church_locatoe.dart';
+import 'home_screen.dart';
 
 class ReceiptScreen extends StatelessWidget {
   const ReceiptScreen({super.key});
@@ -26,13 +27,18 @@ class ReceiptScreen extends StatelessWidget {
                     builder: (context) => const ChurchLocatorScreens()),
               );
             }),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 12.0),
-            child: Icon(Icons.home),
-            
-          )
-        ],
+         actions: [
+          IconButton(
+              icon: Icon(Icons.home_outlined), //SizedBox(width: 12),
+              color: Colors.deepOrange,
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (_) => HomePage()),
+                );
+              })
+      
+       ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 24.0),

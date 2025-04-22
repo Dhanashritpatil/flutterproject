@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'home_screen.dart';
 
 class PrayerRequestPage extends StatelessWidget {
   const PrayerRequestPage({super.key});
@@ -10,6 +11,9 @@ class PrayerRequestPage extends StatelessWidget {
     final TextEditingController phoneController = TextEditingController();
     final TextEditingController requestController = TextEditingController();
 
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isSmallScreen = screenWidth < 400;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -19,64 +23,102 @@ class PrayerRequestPage extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
         centerTitle: true,
-        title: const Text('Prayer Request', style: TextStyle(color: Colors.black)),
-        actions: [
+        title: const Text(
+          'Prayer Request',
+          style: TextStyle(color: Colors.black),
+        ),
+         actions: [
           IconButton(
-            icon: const Icon(Icons.home, color: Colors.black),
-            onPressed: () {
-              // Navigate to home screen
-            },
-          ),
-        ],
+              icon: Icon(Icons.home_outlined), //SizedBox(width: 12),
+              color: Colors.deepOrange,
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (_) => HomePage()),
+                );
+              })
+      
+       ],
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
           return SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+            padding: EdgeInsets.symmetric(
+              horizontal: screenWidth * 0.05,
+              vertical: 24,
+            ),
             child: ConstrainedBox(
               constraints: BoxConstraints(minHeight: constraints.maxHeight),
               child: IntrinsicHeight(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Do you need prayer?',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: isSmallScreen ? 16 : 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       'Complete the form below to submit your prayer request and one of our Prayer Ministers will pray in agreement with you.',
-                      style: TextStyle(fontSize: 14, color: Colors.grey[700]),
+                      style: TextStyle(
+                        fontSize: isSmallScreen ? 13 : 14,
+                        color: Colors.grey[700],
+                      ),
                     ),
                     const SizedBox(height: 24),
 
-                    // Input Fields
-                    _buildTextField(controller: nameController, label: 'Name', hint: 'Enter your full name here...'),
-                    _buildTextField(controller: emailController, label: 'Email', hint: 'Enter your email id...'),
-                    _buildTextField(controller: phoneController, label: 'Phone', hint: 'Enter your phone number...'),
-                    _buildTextField(controller: requestController, label: 'Request', hint: 'Enter your prayer request...', maxLines: 5),
+                    _buildTextField(
+                      controller: nameController,
+                      label: 'Name',
+                      hint: 'Enter your full name here...',
+                    ),
+                    _buildTextField(
+                      controller: emailController,
+                      label: 'Email',
+                      hint: 'Enter your email id...',
+                    ),
+                    _buildTextField(
+                      controller: phoneController,
+                      label: 'Phone',
+                      hint: 'Enter your phone number...',
+                    ),
+                    _buildTextField(
+                      controller: requestController,
+                      label: 'Request',
+                      hint: 'Enter your prayer request...',
+                      maxLines: 5,
+                    ),
 
                     const SizedBox(height: 30),
-
-                    // Submit Button
                     Center(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Handle form submission logic
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Prayer request submitted!')),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.orange,
-                          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 14),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
+                      child: SizedBox(
+                        width: screenWidth * 0.8,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Prayer request submitted!')),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.orange,
+                            padding: const EdgeInsets.symmetric(vertical: 14),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            elevation: 4,
+                            shadowColor: Colors.orangeAccent,
                           ),
-                          elevation: 4,
-                          shadowColor: Colors.orangeAccent,
+                          child: Text(
+                            'Request Prayer',
+                            style: TextStyle(
+                              fontSize: isSmallScreen ? 14 : 16,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
-                        child: const Text('Request Prayer', style: TextStyle(fontSize: 16, color: Colors.white)),
                       ),
                     ),
                   ],
@@ -100,7 +142,10 @@ class PrayerRequestPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+          Text(
+            label,
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          ),
           const SizedBox(height: 8),
           TextField(
             controller: controller,

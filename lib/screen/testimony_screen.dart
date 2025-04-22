@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'home_screen.dart';
 
 class PrayerRequestPage extends StatelessWidget {
   final _nameController = TextEditingController();
@@ -27,12 +28,16 @@ class PrayerRequestPage extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.home, color: Colors.black),
-            onPressed: () {
-              // Handle home button action
-            },
-          )
-        ],
+              icon: Icon(Icons.home_outlined), //SizedBox(width: 12),
+              color: Colors.deepOrange,
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (_) => HomePage()),
+                );
+              })
+      
+       ],
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),

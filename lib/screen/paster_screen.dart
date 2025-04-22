@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'home_screen.dart';
 
 class AddChurchPage extends StatelessWidget {
   const AddChurchPage({super.key});
@@ -26,14 +27,18 @@ class AddChurchPage extends StatelessWidget {
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         ),
-        actions: [
+         actions: [
           IconButton(
-            icon: const Icon(Icons.home, color: Colors.black),
-            onPressed: () {
-              // Go to home
-            },
-          ),
-        ],
+              icon: Icon(Icons.home_outlined), //SizedBox(width: 12),
+              color: Colors.deepOrange,
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (_) => HomePage()),
+                );
+              })
+      
+       ],
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {

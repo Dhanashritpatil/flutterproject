@@ -56,6 +56,22 @@ flutter:
     - lib/assets/images/Group_210.png
     - lib/assets/images/Group_211.png
     - lib/assets/images/Group_212.png
+    - lib/assets/images/pic1.png
+    - lib/assets/images/pic2.png
+    - lib/assets/images/english.jpeg
+    - lib/assets/images/hindi.jpeg
+    - lib/assets/images/marathi.jpeg
+    - lib/assets/images/insta.png
+    - lib/assets/images/whatapp.png
+    - lib/assets/images/msg.png
+    - lib/assets/images/email.png
+    - lib/assets/images/home.png
+    - lib/assets/images/kids_singing.png
+    - lib/assets/images/kid_drawing.png
+    - lib/assets/images/women.png
+    - lib/assets/images/group.png
+    - lib/assets/images/image1.png
+
 
 
   
