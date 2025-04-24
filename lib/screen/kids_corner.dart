@@ -1,196 +1,197 @@
 import 'package:flutter/material.dart';
-import 'home_screen.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class KidsCornerScreen extends StatefulWidget {
-  const KidsCornerScreen({super.key});
-
   @override
-  State<KidsCornerScreen> createState() => _KidsCornerScreenState();
+  _KidsCornerScreenState createState() => _KidsCornerScreenState();
 }
 
 class _KidsCornerScreenState extends State<KidsCornerScreen> {
-  final List<Map<String, String>> items = [
+  int _selectedIndex = 0;
+
+  final List<Map<String, String>> kidsItems = [
     {
       'title': 'Sunday Schools',
       'desc':
           'Find all the sunday schools near your locality Lorem ipsum dolor sit amet.',
-      'image': 'lib/assets/images/home.png',
+      'image': 'lib/assets/images/home.png'
     },
     {
       'title': 'Vacation Bible School',
       'desc':
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et velit ut purus lobortis facilisis in vitae libero.',
-      'image': 'lib/assets/images/kid_drawing.png',
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et velit ut purus lobortis facilisis.',
+      'image': 'lib/assets/images/kid_drawing.png'
     },
     {
       'title': 'Children Songs',
       'desc': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      'image': 'lib/assets/images/kids_singing.png',
+      'image': 'lib/assets/images/kids_singing.png'
     },
     {
       'title': 'Worksheets',
       'desc':
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et velit ut purus.',
-      'image': 'lib/assets/images/group.png',
+      'image': 'lib/assets/images/group.png'
     },
   ];
-
-  void _onCardTap(Map<String, String> item) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => KidsDetailScreen(item),
-      ),
-    );
-  }
-
-  void _refresh() {
-    setState(() {
-      items.shuffle(); // simulate refresh
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F8F8),
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text('Kids Corner'),
+        title: Text("Kids Corner"),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 0,
+        leading: Icon(Icons.arrow_back, color: Colors.black),
         actions: [
-          IconButton(
-              icon: Icon(Icons.home_outlined), //SizedBox(width: 12),
-              color: Colors.deepOrange,
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (_) => HomePage()),
+          PopupMenuButton<String>(
+            icon: Icon(Icons.more_vert, color: Colors.black),
+            onSelected: (value) => print("Selected: $value"),
+            itemBuilder: (BuildContext context) {
+              return ['1', '2', '3'].map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
                 );
-              })
-      
-       ],
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: TextField(
-              decoration: InputDecoration(
-                prefixIcon: const Icon(Icons.search, color: Colors.deepOrange),
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.filter_list),
-                  onPressed: () {
-                    // filter logic
-                  },
-                ),
-                hintText: 'Search...',
-                filled: true,
-                fillColor: Colors.white,
-                contentPadding: const EdgeInsets.symmetric(vertical: 0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
+              }).toList();
+            },
           ),
-          Expanded(
-            child: RefreshIndicator(
-              onRefresh: () async => _refresh(),
-              child: ListView.builder(
-                itemCount: items.length,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                itemBuilder: (context, index) {
-                  final item = items[index];
-                  return GestureDetector(
-                    onTap: () => _onCardTap(item),
-                    child: Container(
-                      margin: const EdgeInsets.only(bottom: 16),
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.deepPurple.withOpacity(0.08),
-                            blurRadius: 8,
-                            offset: const Offset(0, 4),
-                          )
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  item['title']!,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                const SizedBox(height: 6),
-                                Text(
-                                  item['desc']!,
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(color: Colors.grey),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.asset(
-                              item['image']!,
-                              width: 80,
-                              height: 80,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
+        ],
+      ),
+      body: ListView(
+        padding: EdgeInsets.all(16),
+        children: [
+          _buildSearchBar(),
+          SizedBox(height: 20),
+          ...kidsItems.map((item) => _buildCard(item)).toList(),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.black54,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        type: BottomNavigationBarType.fixed,
+        items: [
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: const EdgeInsets.only(top: 6.0),
+              child: SvgPicture.asset(
+                'lib/assets/icons/home_icon.svg',
+                width: 20,
+                height: 20,
+                color: Colors.black,
               ),
             ),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: const EdgeInsets.only(top: 6.0),
+              child: SvgPicture.asset(
+                'lib/assets/icons/favorite_icon.svg',
+                width: 20,
+                height: 20,
+                color: Colors.black,
+              ),
+            ),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: const EdgeInsets.only(top: 6.0),
+              child: SvgPicture.asset(
+                'lib/assets/icons/hallow_notification.svg',
+                width: 20,
+                height: 20,
+                color: Colors.black,
+              ),
+            ),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: const EdgeInsets.only(top: 6.0),
+              child: SvgPicture.asset(
+                'lib/assets/icons/user_icon.svg',
+                width: 20,
+                height: 20,
+                color: Colors.black,
+              ),
+            ),
+            label: '',
           ),
         ],
       ),
     );
   }
-}
 
-// Detail page when a card is tapped
-class KidsDetailScreen extends StatelessWidget {
-  final Map<String, String> item;
-  const KidsDetailScreen(this.item, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(item['title']!),
+  Widget _buildSearchBar() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(30),
+        boxShadow: [BoxShadow(blurRadius: 6, color: Colors.black12)],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            Image.asset(item['image']!, height: 200),
-            const SizedBox(height: 20),
-            Text(
-              item['desc']!,
-              style: const TextStyle(fontSize: 16),
+      child: Row(
+        children: [
+          Icon(Icons.search, color: Colors.deepOrange),
+          SizedBox(width: 10),
+          Expanded(
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: "Search...",
+                border: InputBorder.none,
+              ),
             ),
-          ],
-        ),
+          ),
+          Icon(Icons.filter_list, color: Colors.grey),
+          SizedBox(width: 10),
+          Icon(Icons.sort, color: Colors.grey),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCard(Map<String, String> item) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 20),
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [BoxShadow(blurRadius: 8, color: Colors.black12)],
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(item['title']!,
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                SizedBox(height: 6),
+                Text(item['desc']!,
+                    style: TextStyle(color: Colors.grey.shade700)),
+              ],
+            ),
+          ),
+          SizedBox(width: 10),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.asset(
+              item['image']!,
+              width: 100,
+              height: 100,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ],
       ),
     );
   }

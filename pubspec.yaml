@@ -30,6 +30,11 @@ dependencies:
   flutter:
     sdk: flutter
 
+  shimmer: ^3.0.0
+  flutter_svg: ^2.0.7
+  
+
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
@@ -71,7 +76,16 @@ flutter:
     - lib/assets/images/women.png
     - lib/assets/images/group.png
     - lib/assets/images/image1.png
-
+    - lib/assets/images/good_shepherd.jpg
+    - lib/assets/images/christ.jpg
+    - lib/assets/images/church_image.png
+    - lib/assets/icons/prayer-petition.png
+    - lib/assets/icons/hallow_notification.svg
+    - lib/assets/icons/home_icon.svg
+    - lib/assets/icons/user_icon.svg
+    - lib/assets/icons/favorite_icon.svg
+    - lib/assets/icons/insta_icon.svg
+    - lib/assets/icons/whatsapp_icon.svg
 
 
   

@@ -1,16 +1,6 @@
 import 'package:flutter/material.dart';
-import 'church_locatoe.dart';
-import 'recpite.dart';
-import 'holy_bible.dart';
-import 'daily_mana_screen.dart';
-import 'Donation.dart';
-import 'kids_corner.dart';
-import 'prayer_request.dart';
-import 'refer&earn.dart';
-import 'songs_book.dart';
-import 'church.dart';
-import 'songs.dart';
-import 'home_screen.dart';
+import 'home.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(primarySwatch: Colors.orange, useMaterial3: true),
+      theme: ThemeData(primarySwatch: Colors.deepOrange, useMaterial3: true),
       home: const AuthScreen(),
     );
   }
@@ -108,7 +98,7 @@ class _AuthScreenState extends State<AuthScreen> {
                               side: BorderSide(color: Colors.orange.shade700),
                             ),
                             backgroundColor:
-                                isLogin ? Colors.orange : Colors.white,
+                                isLogin ? Colors.deepOrange : Colors.white,
                           ),
                           onPressed: () => setState(() => isLogin = true),
                           child: Text(
@@ -159,6 +149,9 @@ class _AuthScreenState extends State<AuthScreen> {
                   const SizedBox(height: 10),
                   _buildPasswordField(
                     passwordController,
+
+
+                    
                     'Password',
                     passwordVisible,
                     () {
@@ -258,6 +251,64 @@ class _AuthScreenState extends State<AuthScreen> {
             ),
           ),
         ),
+      ),
+      
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.black54,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        type: BottomNavigationBarType.fixed,
+        items: [
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: const EdgeInsets.only(top: 6.0),
+              child: SvgPicture.asset(
+                'lib/assets/icons/home_icon.svg',
+                width: 20,
+                height: 20,
+                color: Colors.black,
+              ),
+            ),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: const EdgeInsets.only(top: 6.0),
+              child: SvgPicture.asset(
+                'lib/assets/icons/favorite_icon.svg',
+                width: 20,
+                height: 20,
+                color: Colors.black,
+              ),
+            ),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: const EdgeInsets.only(top: 6.0),
+              child: SvgPicture.asset(
+                'lib/assets/icons/hallow_notification.svg',
+                width: 20,
+                height: 20,
+                color: Colors.black,
+              ),
+            ),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: const EdgeInsets.only(top: 6.0),
+              child: SvgPicture.asset(
+                'lib/assets/icons/user_icon.svg',
+                width: 20,
+                height: 20,
+                color: Colors.black,
+              ),
+            ),
+            label: '',
+          ),
+        ],
       ),
     );
   }

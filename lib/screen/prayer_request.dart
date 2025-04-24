@@ -1,168 +1,367 @@
-import 'package:flutter/material.dart';
-import 'home_screen.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_svg/flutter_svg.dart';
+// import 'package:shimmer/shimmer.dart';
 
-class PrayerRequestPage extends StatelessWidget {
-  const PrayerRequestPage({super.key});
+// class PrayerRequestScreen extends StatefulWidget {
+//   @override
+//   _PrayerRequestScreenState createState() => _PrayerRequestScreenState();
+// }
+
+// class _PrayerRequestScreenState extends State<PrayerRequestScreen> {
+//   int _selectedIndex = 0;
+
+//   final List<Map<String, dynamic>> prayerRequests = [
+//     {
+//       'date': 'Jan 09, 2021',
+//       'text': 'urgent pray for my new home... documents stuck at icici bank legal technician for disbussed',
+//       'prayed': 11
+//     },
+//     {
+//       'date': 'Sep 22, 2020',
+//       'text': 'plz.... mere buva ke liye pray kariye unka name snehal mahendra bhoir hai. covid positive suffered from last...',
+//       'prayed': 23
+//     },
+//     {
+//       'date': 'Jul 31, 2020',
+//       'text': 'pls pray for my own house.. thanku lord.. i received in the name of jesus.',
+//       'prayed': 15
+//     },
+//     {
+//       'date': 'Jul 05, 2020',
+//       'text': 'plz pray for my husband 3days se unki tabblyat tik nahi hai cold fever and cough hai mere husband ka',
+//       'prayed': 0
+//     },
+//     {
+//       'date': 'Jul 04, 2020',
+//       'text': 'pls mere liye prayer kare, mujhe kal suddenly fever aaya aur ratko cold bhi lag raha tha maine dawai kha.',
+//       'prayed': 0
+//     },
+//   ];
+  
+ 
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text("Prayer Request"),
+//         centerTitle: true,
+//         backgroundColor: Colors.white,
+//         foregroundColor: Colors.black,
+//         elevation: 0,
+//         leading: Icon(Icons.arrow_back, color: Colors.black),
+//         actions: [
+//           PopupMenuButton<String>(
+//             icon: Icon(Icons.more_vert, color: Colors.black),
+//             onSelected: (value) {
+//               print("Selected option: $value");
+//             },
+//             itemBuilder: (context) {
+//               return ['1', '2', '3'].map((option) {
+//                 return PopupMenuItem(
+//                   value: option,
+//                   child: Text(option),
+//                 );
+//               }).toList();
+//             },
+//           )
+//         ],
+//       ),
+//       body: ListView.builder(
+//         padding: EdgeInsets.all(16),
+//         itemCount: prayerRequests.length,
+//         itemBuilder: (context, index) {
+//           final item = prayerRequests[index];
+//           return Container(
+//             margin: EdgeInsets.only(bottom: 16),
+//             padding: EdgeInsets.all(16),
+//             decoration: BoxDecoration(
+//               color: Colors.white,
+//               borderRadius: BorderRadius.circular(12),
+//               boxShadow: [BoxShadow(blurRadius: 6, color: Colors.black12)],
+//             ),
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 Text(item['date'], style: TextStyle(color: Colors.grey)),
+//                 SizedBox(height: 8),
+//                 Text(item['text']),
+//                 SizedBox(height: 12),
+//                 Row(
+//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                   children: [
+//                     Text('Closed', style: TextStyle(color: Colors.grey)),
+//                     Text('Prayed for ${item['prayed']} times', style: TextStyle(color: Colors.grey)),
+//                   ],
+//                 )
+//               ],
+//             ),
+//           );
+//         },
+//       ),
+//       bottomNavigationBar: BottomNavigationBar(
+//         selectedItemColor: Colors.black,
+//         unselectedItemColor: Colors.black54,
+//         showSelectedLabels: false,
+//         showUnselectedLabels: false,
+//         type: BottomNavigationBarType.fixed,
+//         items: [
+//           BottomNavigationBarItem(
+//             icon: Padding(
+//               padding: const EdgeInsets.only(top: 6.0),
+//               child: SvgPicture.asset(
+//                 'lib/assets/icons/home_icon.svg',
+//                 width: 20,
+//                 height: 20,
+//                 color: Colors.black,
+//               ),
+//             ),
+//             label: '',
+//           ),
+//           BottomNavigationBarItem(
+//             icon: Padding(
+//               padding: const EdgeInsets.only(top: 6.0),
+//               child: SvgPicture.asset(
+//                 'lib/assets/icons/favorite_icon.svg',
+//                 width: 20,
+//                 height: 20,
+//                 color: Colors.black,
+//               ),
+//             ),
+//             label: '',
+//           ),
+//           BottomNavigationBarItem(
+//             icon: Padding(
+//               padding: const EdgeInsets.only(top: 6.0),
+//               child: SvgPicture.asset(
+//                 'lib/assets/icons/hallow_notification.svg',
+//                 width: 20,
+//                 height: 20,
+//                 color: Colors.black,
+//               ),
+//             ),
+//             label: '',
+//           ),
+//           BottomNavigationBarItem(
+//             icon: Padding(
+//               padding: const EdgeInsets.only(top: 6.0),
+//               child: SvgPicture.asset(
+//                 'lib/assets/icons/user_icon.svg',
+//                 width: 20,
+//                 height: 20,
+//                 color: Colors.black,
+//               ),
+//             ),
+//             label: '',
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shimmer/shimmer.dart';
+
+class PrayerRequestScreen extends StatefulWidget {
+  @override
+  _PrayerRequestScreenState createState() => _PrayerRequestScreenState();
+}
+
+class _PrayerRequestScreenState extends State<PrayerRequestScreen> {
+  int _selectedIndex = 0;
+  bool _isLoading = true;
+
+  final List<Map<String, dynamic>> prayerRequests = [
+    {
+      'date': 'Jan 09, 2021',
+      'text': 'urgent pray for my new home...',
+      'prayed': 11
+    },
+    {
+      'date': 'Sep 22, 2020',
+      'text': 'plz.... mere buva ke liye pray kariye...',
+      'prayed': 23
+    },
+    {
+      'date': 'Jul 31, 2020',
+      'text': 'pls pray for my own house...',
+      'prayed': 15
+    },
+    {
+      'date': 'Jul 05, 2020',
+      'text': 'plz pray for my husband...',
+      'prayed': 0
+    },
+    {
+      'date': 'Jul 04, 2020',
+      'text': 'pls mere liye prayer kare...',
+      'prayed': 0
+    },
+  ];
 
   @override
-  Widget build(BuildContext context) {
-    final TextEditingController nameController = TextEditingController();
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController phoneController = TextEditingController();
-    final TextEditingController requestController = TextEditingController();
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(seconds: 2), () {
+      setState(() => _isLoading = false);
+    });
+  }
 
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isSmallScreen = screenWidth < 400;
-
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
-        ),
-        centerTitle: true,
-        title: const Text(
-          'Prayer Request',
-          style: TextStyle(color: Colors.black),
-        ),
-         actions: [
-          IconButton(
-              icon: Icon(Icons.home_outlined), //SizedBox(width: 12),
-              color: Colors.deepOrange,
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (_) => HomePage()),
-                );
-              })
-      
-       ],
+  Widget buildShimmerCard() {
+    return Container(
+      margin: EdgeInsets.only(bottom: 16),
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [BoxShadow(blurRadius: 6, color: Colors.black12)],
       ),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          return SingleChildScrollView(
-            padding: EdgeInsets.symmetric(
-              horizontal: screenWidth * 0.05,
-              vertical: 24,
-            ),
-            child: ConstrainedBox(
-              constraints: BoxConstraints(minHeight: constraints.maxHeight),
-              child: IntrinsicHeight(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Do you need prayer?',
-                      style: TextStyle(
-                        fontSize: isSmallScreen ? 16 : 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Complete the form below to submit your prayer request and one of our Prayer Ministers will pray in agreement with you.',
-                      style: TextStyle(
-                        fontSize: isSmallScreen ? 13 : 14,
-                        color: Colors.grey[700],
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-
-                    _buildTextField(
-                      controller: nameController,
-                      label: 'Name',
-                      hint: 'Enter your full name here...',
-                    ),
-                    _buildTextField(
-                      controller: emailController,
-                      label: 'Email',
-                      hint: 'Enter your email id...',
-                    ),
-                    _buildTextField(
-                      controller: phoneController,
-                      label: 'Phone',
-                      hint: 'Enter your phone number...',
-                    ),
-                    _buildTextField(
-                      controller: requestController,
-                      label: 'Request',
-                      hint: 'Enter your prayer request...',
-                      maxLines: 5,
-                    ),
-
-                    const SizedBox(height: 30),
-                    Center(
-                      child: SizedBox(
-                        width: screenWidth * 0.8,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Prayer request submitted!')),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.orange,
-                            padding: const EdgeInsets.symmetric(vertical: 14),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            elevation: 4,
-                            shadowColor: Colors.orangeAccent,
-                          ),
-                          child: Text(
-                            'Request Prayer',
-                            style: TextStyle(
-                              fontSize: isSmallScreen ? 14 : 16,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
+      child: Shimmer.fromColors(
+        baseColor: Colors.grey[300]!,
+        highlightColor: Colors.grey[100]!,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(height: 14, width: 80, color: Colors.white),
+            SizedBox(height: 10),
+            Container(height: 14, width: double.infinity, color: Colors.white),
+            SizedBox(height: 6),
+            Container(height: 14, width: double.infinity, color: Colors.white),
+            SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(height: 14, width: 60, color: Colors.white),
+                Container(height: 14, width: 100, color: Colors.white),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildTextField({
-    required TextEditingController controller,
-    required String label,
-    required String hint,
-    int maxLines = 1,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-          ),
-          const SizedBox(height: 8),
-          TextField(
-            controller: controller,
-            maxLines: maxLines,
-            decoration: InputDecoration(
-              hintText: hint,
-              filled: true,
-              fillColor: Colors.white,
-              border: OutlineInputBorder(
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Prayer Request"),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 0,
+        leading: Icon(Icons.arrow_back, color: Colors.black),
+        actions: [
+          PopupMenuButton<String>(
+            icon: Icon(Icons.more_vert, color: Colors.black),
+            onSelected: (value) {
+              print("Selected option: $value");
+            },
+            itemBuilder: (context) {
+              return ['1', '2', '3'].map((option) {
+                return PopupMenuItem(
+                  value: option,
+                  child: Text(option),
+                );
+              }).toList();
+            },
+          )
+        ],
+      ),
+      body: ListView.builder(
+        padding: EdgeInsets.all(16),
+        itemCount: _isLoading ? 4 : prayerRequests.length,
+        itemBuilder: (context, index) {
+          if (_isLoading) {
+            return buildShimmerCard();
+          } else {
+            final item = prayerRequests[index];
+            return Container(
+              margin: EdgeInsets.only(bottom: 16),
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide.none,
+                boxShadow: [BoxShadow(blurRadius: 6, color: Colors.black12)],
               ),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(item['date'], style: TextStyle(color: Colors.grey)),
+                  SizedBox(height: 8),
+                  Text(item['text']),
+                  SizedBox(height: 12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Closed', style: TextStyle(color: Colors.grey)),
+                      Text('Prayed for ${item['prayed']} times', style: TextStyle(color: Colors.grey)),
+                    ],
+                  )
+                ],
+              ),
+            );
+          }
+        },
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.black54,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        type: BottomNavigationBarType.fixed,
+        items: [
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: const EdgeInsets.only(top: 6.0),
+              child: SvgPicture.asset(
+                'lib/assets/icons/home_icon.svg',
+                width: 20,
+                height: 20,
+                color: Colors.black,
+              ),
             ),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: const EdgeInsets.only(top: 6.0),
+              child: SvgPicture.asset(
+                'lib/assets/icons/favorite_icon.svg',
+                width: 20,
+                height: 20,
+                color: Colors.black,
+              ),
+            ),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: const EdgeInsets.only(top: 6.0),
+              child: SvgPicture.asset(
+                'lib/assets/icons/hallow_notification.svg',
+                width: 20,
+                height: 20,
+                color: Colors.black,
+              ),
+            ),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: const EdgeInsets.only(top: 6.0),
+              child: SvgPicture.asset(
+                'lib/assets/icons/user_icon.svg',
+                width: 20,
+                height: 20,
+                color: Colors.black,
+              ),
+            ),
+            label: '',
           ),
         ],
       ),
     );
   }
 }
+

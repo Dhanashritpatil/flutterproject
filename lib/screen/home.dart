@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'notification_screen.dart';
+import 'notification.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class HomePage extends StatelessWidget {
   final List<_GridItem> gridItems = [
-    _GridItem("Church Locator", Icons.location_on, '/churchLocator'),
+    _GridItem("Church Locator", Icons.location_on, '/charch'),
     _GridItem("Holy Bible Access", Icons.menu_book, '/holybible'),
     _GridItem("Daily Manna", Icons.book, '/dailymanna'),
     _GridItem("Prayer Requests", Icons.message, '/prayer'),
@@ -12,12 +13,14 @@ class HomePage extends StatelessWidget {
     _GridItem("Refer and Earn", Icons.card_giftcard, '/referrs'),
     _GridItem("Donate", Icons.volunteer_activism, '/donation'),
     _GridItem("Christian Matrimony", Icons.favorite, '/matrimony'),
+    _GridItem("Event", Icons.favorite, '/events'),
     _GridItem("Christian Shopping", Icons.shopping_cart, '/shopping'),
     _GridItem("Bible School", Icons.school, '/bibleSchool'),
     _GridItem("Bible Quiz", Icons.quiz, '/bibleQuiz'),
     _GridItem("Ask Bible TH", Icons.chat, '/askBibleTH'),
     _GridItem("Kid’s Corner", Icons.child_care, '/kidscorner'),
     _GridItem("Songs", Icons.music_note, '/songs'),
+    _GridItem("church", Icons.music_note, '/church'),
   ];
 
   @override
@@ -97,6 +100,64 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
+      
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.black54,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        type: BottomNavigationBarType.fixed,
+        items: [
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: const EdgeInsets.only(top: 6.0),
+              child: SvgPicture.asset(
+                'lib/assets/icons/home_icon.svg',
+                width: 20,
+                height: 20,
+                color: Colors.black,
+              ),
+            ),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: const EdgeInsets.only(top: 6.0),
+              child: SvgPicture.asset(
+                'lib/assets/icons/favorite_icon.svg',
+                width: 20,
+                height: 20,
+                color: Colors.black,
+              ),
+            ),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: const EdgeInsets.only(top: 6.0),
+              child: SvgPicture.asset(
+                'lib/assets/icons/hallow_notification.svg',
+                width: 20,
+                height: 20,
+                color: Colors.black,
+              ),
+            ),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: const EdgeInsets.only(top: 6.0),
+              child: SvgPicture.asset(
+                'lib/assets/icons/user_icon.svg',
+                width: 20,
+                height: 20,
+                color: Colors.black,
+              ),
+            ),
+            label: '',
+          ),
+        ],
+      ),
     );
   }
 
@@ -142,19 +203,20 @@ class HomePage extends StatelessWidget {
             ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange),
+                    backgroundColor: Colors.deepOrange ),
                 child: Text("Logout")),
             ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange),
+                    backgroundColor: Colors.deepOrange ),
                 child: Text("Contact Us")),
           ],
         ),
         const SizedBox(height: 8),
         ElevatedButton(
           onPressed: () {},
-          style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
+          style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.deepOrange ),
           child: Text("Terms and Conditions"),
         ),
       ],

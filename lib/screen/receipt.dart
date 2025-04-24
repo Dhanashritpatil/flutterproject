@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:path_provider/path_provider.dart';
-import 'church_locatoe.dart';
-import 'home_screen.dart';
+import 'church_locator.dart';
+import 'home.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ReceiptScreen extends StatelessWidget {
   const ReceiptScreen({super.key});
@@ -23,11 +24,10 @@ class ReceiptScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => const ChurchLocatorScreens()),
+                MaterialPageRoute(builder: (context) => ChurchLocatorScreen()),
               );
             }),
-         actions: [
+        actions: [
           IconButton(
               icon: Icon(Icons.home_outlined), //SizedBox(width: 12),
               color: Colors.deepOrange,
@@ -37,8 +37,7 @@ class ReceiptScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (_) => HomePage()),
                 );
               })
-      
-       ],
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 24.0),
@@ -89,6 +88,64 @@ class ReceiptScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+      
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.black54,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        type: BottomNavigationBarType.fixed,
+        items: [
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: const EdgeInsets.only(top: 6.0),
+              child: SvgPicture.asset(
+                'lib/assets/icons/home_icon.svg',
+                width: 20,
+                height: 20,
+                color: Colors.black,
+              ),
+            ),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: const EdgeInsets.only(top: 6.0),
+              child: SvgPicture.asset(
+                'lib/assets/icons/favorite_icon.svg',
+                width: 20,
+                height: 20,
+                color: Colors.black,
+              ),
+            ),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: const EdgeInsets.only(top: 6.0),
+              child: SvgPicture.asset(
+                'lib/assets/icons/hallow_notification.svg',
+                width: 20,
+                height: 20,
+                color: Colors.black,
+              ),
+            ),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: const EdgeInsets.only(top: 6.0),
+              child: SvgPicture.asset(
+                'lib/assets/icons/user_icon.svg',
+                width: 20,
+                height: 20,
+                color: Colors.black,
+              ),
+            ),
+            label: '',
+          ),
+        ],
       ),
     );
   }
