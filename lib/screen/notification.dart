@@ -425,7 +425,6 @@
 // //   }
 // // // }
 
-
 // import 'package:flutter/material.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
 // import 'package:shimmer/shimmer.dart';
@@ -623,7 +622,6 @@
 //   }
 // }
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shimmer/shimmer.dart';
@@ -655,16 +653,17 @@ class _NotificationScreenState extends State<NotificationScreen> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text('Notification'),
-        leading: const Icon(Icons.arrow_back),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.home_outlined),
-            color: Colors.deepOrange,
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (_) =>  HomePage()),
-              );
+          PopupMenuButton<String>(
+            icon: Icon(Icons.more_vert, color: Colors.black),
+            onSelected: (value) => print("Selected: $value"),
+            itemBuilder: (BuildContext context) {
+              return ['1', '2', '3'].map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
             },
           ),
         ],
@@ -681,28 +680,27 @@ class _NotificationScreenState extends State<NotificationScreen> {
             const SizedBox(height: 12),
             if (isLoading)
               ...List.generate(2, (_) => _buildShimmerCard())
-            else
-              ...[
-                _MessageCard(
-                  username: 'Joel Raj',
-                  time: '4 mins ago',
-                  message:
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque libero eros...',
-                  imageUrl: 'assets/images/user1.jpg',
-                  likes: 25,
-                  comments: 13,
-                ),
-                const SizedBox(height: 12),
-                _MessageCard(
-                  username: 'Lara Croft',
-                  time: '32 mins ago',
-                  message:
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque libero eros...',
-                  imageUrl: 'assets/images/user2.jpg',
-                  likes: 0,
-                  comments: 0,
-                ),
-              ],
+            else ...[
+              _MessageCard(
+                username: 'Joel Raj',
+                time: '4 mins ago',
+                message:
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque libero eros...',
+                imageUrl: 'assets/images/user1.jpg',
+                likes: 25,
+                comments: 13,
+              ),
+              const SizedBox(height: 12),
+              _MessageCard(
+                username: 'Lara Croft',
+                time: '32 mins ago',
+                message:
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque libero eros...',
+                imageUrl: 'assets/images/user2.jpg',
+                likes: 0,
+                comments: 0,
+              ),
+            ],
           ],
         ),
       ),
@@ -729,7 +727,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             icon: Padding(
               padding: const EdgeInsets.only(top: 6.0),
               child: SvgPicture.asset(
-                'lib/assets/icons/favorite_icon.svg',
+                'lib/assets/icons/heart_icon.svg',
                 width: 20,
                 height: 20,
                 color: Colors.black,
@@ -741,7 +739,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             icon: Padding(
               padding: const EdgeInsets.only(top: 6.0),
               child: SvgPicture.asset(
-                'lib/assets/icons/hallow_notification.svg',
+                'lib/assets/icons/fill_notification.svg',
                 width: 20,
                 height: 20,
                 color: Colors.black,
