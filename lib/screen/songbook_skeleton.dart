@@ -52,14 +52,16 @@ class _SongBookScreenState extends State<SongBookScreen> {
         centerTitle: true,
         title: const Text('Songs Book', style: TextStyle(color: Colors.black)),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.home_outlined),
-            color: Colors.deepOrange,
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (_) => HomePage()),
-              );
+          PopupMenuButton<String>(
+            icon: Icon(Icons.more_vert, color: Colors.black),
+            onSelected: (value) => print("Selected: $value"),
+            itemBuilder: (BuildContext context) {
+              return ['1', '2', '3'].map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
             },
           ),
         ],

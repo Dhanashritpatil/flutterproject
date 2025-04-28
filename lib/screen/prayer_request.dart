@@ -37,8 +37,7 @@
 //       'prayed': 0
 //     },
 //   ];
-  
- 
+
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
@@ -161,6 +160,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shimmer/shimmer.dart';
+import 'notification.dart';
+import 'home.dart';
+import 'request_prayer.dart';
+import 'user.dart';
+
 
 class PrayerRequestScreen extends StatefulWidget {
   @override
@@ -187,11 +191,7 @@ class _PrayerRequestScreenState extends State<PrayerRequestScreen> {
       'text': 'pls pray for my own house...',
       'prayed': 15
     },
-    {
-      'date': 'Jul 05, 2020',
-      'text': 'plz pray for my husband...',
-      'prayed': 0
-    },
+    {'date': 'Jul 05, 2020', 'text': 'plz pray for my husband...', 'prayed': 0},
     {
       'date': 'Jul 04, 2020',
       'text': 'pls mere liye prayer kare...',
@@ -268,43 +268,106 @@ class _PrayerRequestScreenState extends State<PrayerRequestScreen> {
           )
         ],
       ),
-      body: ListView.builder(
-        padding: EdgeInsets.all(16),
-        itemCount: _isLoading ? 4 : prayerRequests.length,
-        itemBuilder: (context, index) {
-          if (_isLoading) {
-            return buildShimmerCard();
-          } else {
-            final item = prayerRequests[index];
-            return Container(
-              margin: EdgeInsets.only(bottom: 16),
-              padding: EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [BoxShadow(blurRadius: 6, color: Colors.black12)],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: _isLoading ? 4 : prayerRequests.length,
+                itemBuilder: (context, index) {
+                  if (_isLoading) {
+                    return buildShimmerCard();
+                  } else {
+                    final item = prayerRequests[index];
+                    return Container(
+                      margin: EdgeInsets.only(bottom: 16),
+                      padding: EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(blurRadius: 6, color: Colors.black12)
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(item['date'],
+                              style: TextStyle(color: Colors.grey)),
+                          SizedBox(height: 8),
+                          Text(item['text']),
+                          SizedBox(height: 12),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('Closed',
+                                  style: TextStyle(color: Colors.grey)),
+                              Text('Prayed for ${item['prayed']} times',
+                                  style: TextStyle(color: Colors.grey)),
+                            ],
+                          )
+                        ],
+                      ),
+                    );
+                  }
+                },
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(item['date'], style: TextStyle(color: Colors.grey)),
-                  SizedBox(height: 8),
-                  Text(item['text']),
-                  SizedBox(height: 12),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Closed', style: TextStyle(color: Colors.grey)),
-                      Text('Prayed for ${item['prayed']} times', style: TextStyle(color: Colors.grey)),
-                    ],
-                  )
-                ],
-              ),
+            ),
+            SizedBox(height: 8),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+  onPressed: () {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) =>  PrayerRequestPage()), // 👈 go to ChurchScreen
+    );
+  },
+  style: ElevatedButton.styleFrom(
+    backgroundColor: Colors.deepOrange,
+    padding: EdgeInsets.symmetric(vertical: 16),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12),
+    ),
+  ),
+  child: Text(
+    "Submit Prayer Request",
+    style: TextStyle(fontSize: 16, color: Colors.white),
+  ),
+)
+
+            ),
+         ],
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+
+          if (index == 2) {
+            // Open Notification screen when bell is tapped
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const NotificationScreen()),
+            );
+          }
+          // Optionally handle other indices (Home, Favorites, Profile)
+          else if (index == 0) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const HomePage()),
+            );
+          } else if (index == 3) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ProfileCard()),
             );
           }
         },
-      ),
-      bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.black,
         unselectedItemColor: Colors.black54,
         showSelectedLabels: false,
@@ -364,4 +427,3 @@ class _PrayerRequestScreenState extends State<PrayerRequestScreen> {
     );
   }
 }
-

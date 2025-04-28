@@ -626,6 +626,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shimmer/shimmer.dart';
 import 'home.dart';
+import 'user.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -636,6 +637,7 @@ class NotificationScreen extends StatefulWidget {
 
 class _NotificationScreenState extends State<NotificationScreen> {
   bool isLoading = true;
+   int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -705,62 +707,90 @@ class _NotificationScreenState extends State<NotificationScreen> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.black54,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(
-            icon: Padding(
-              padding: const EdgeInsets.only(top: 6.0),
-              child: SvgPicture.asset(
-                'lib/assets/icons/home_icon.svg',
-                width: 20,
-                height: 20,
-                color: Colors.black,
-              ),
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Padding(
-              padding: const EdgeInsets.only(top: 6.0),
-              child: SvgPicture.asset(
-                'lib/assets/icons/heart_icon.svg',
-                width: 20,
-                height: 20,
-                color: Colors.black,
-              ),
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Padding(
-              padding: const EdgeInsets.only(top: 6.0),
-              child: SvgPicture.asset(
-                'lib/assets/icons/fill_notification.svg',
-                width: 20,
-                height: 20,
-                color: Colors.black,
-              ),
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Padding(
-              padding: const EdgeInsets.only(top: 6.0),
-              child: SvgPicture.asset(
-                'lib/assets/icons/user_icon.svg',
-                width: 20,
-                height: 20,
-                color: Colors.black,
-              ),
-            ),
-            label: '',
-          ),
-        ],
+        currentIndex: _selectedIndex,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+
+          if (index == 2) {
+            // Open Notification screen when bell is tapped
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const NotificationScreen()),
+            );
+          }
+          // Optionally handle other indices (Home, Favorites, Profile)
+          else if (index == 0) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const HomePage()),
+            );
+          } else if (index == 3) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ProfileCard()),
+            );
+          }
+        },
+  selectedItemColor: Colors.black,
+  unselectedItemColor: Colors.black54,
+  showSelectedLabels: false,
+  showUnselectedLabels: false,
+  type: BottomNavigationBarType.fixed,
+  items: [
+    BottomNavigationBarItem(
+      icon: Padding(
+        padding: const EdgeInsets.only(top: 6.0),
+        child: SvgPicture.asset(
+          'lib/assets/icons/home_icon.svg',
+          width: 20,
+          height: 20,
+          color: Colors.black,
+        ),
       ),
+      label: '',
+    ),
+    BottomNavigationBarItem(
+      icon: Padding(
+        padding: const EdgeInsets.only(top: 6.0),
+        child: SvgPicture.asset(
+          'lib/assets/icons/favorite_icon.svg',
+          width: 20,
+          height: 20,
+          color: Colors.black,
+        ),
+      ),
+      label: '',
+    ),
+    BottomNavigationBarItem(
+      icon: Padding(
+        padding: const EdgeInsets.only(top: 6.0),
+        child: SvgPicture.asset(
+          'lib/assets/icons/hallow_notification.svg',
+          width: 20,
+          height: 20,
+          color: Colors.black,
+        ),
+      ),
+      label: '',
+    ),
+    BottomNavigationBarItem(
+      icon: Padding(
+        padding: const EdgeInsets.only(top: 6.0),
+        child: SvgPicture.asset(
+          'lib/assets/icons/user_icon.svg',
+          width: 20,
+          height: 20,
+          color: Colors.black,
+        ),
+      ),
+      label: '',
+    ),
+  ],
+),
+
+
     );
   }
 
@@ -952,6 +982,7 @@ class _MessageCard extends StatelessWidget {
                 Text('$comments Comments'),
               ],
             )
+
           ],
         ),
       ),

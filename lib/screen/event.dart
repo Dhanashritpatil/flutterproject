@@ -268,6 +268,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'notification.dart';
+import 'home.dart';
 
 class EventsPage extends StatefulWidget {
   @override
@@ -277,6 +279,7 @@ class EventsPage extends StatefulWidget {
 class _EventsPageState extends State<EventsPage> {
   final TextEditingController _searchController = TextEditingController();
   bool isLoading = true;
+  int _selectedIndex = 0; // Initialize it with the first tab index
 
   @override
   void initState() {
@@ -339,62 +342,82 @@ class _EventsPageState extends State<EventsPage> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.black54,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(
-            icon: Padding(
-              padding: const EdgeInsets.only(top: 6.0),
-              child: SvgPicture.asset(
-                'lib/assets/icons/home_icon.svg',
-                width: 20,
-                height: 20,
-                color: Colors.black,
-              ),
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Padding(
-              padding: const EdgeInsets.only(top: 6.0),
-              child: SvgPicture.asset(
-                'lib/assets/icons/favorite_icon.svg',
-                width: 20,
-                height: 20,
-                color: Colors.black,
-              ),
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Padding(
-              padding: const EdgeInsets.only(top: 6.0),
-              child: SvgPicture.asset(
-                'lib/assets/icons/hallow_notification.svg',
-                width: 20,
-                height: 20,
-                color: Colors.black,
-              ),
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Padding(
-              padding: const EdgeInsets.only(top: 6.0),
-              child: SvgPicture.asset(
-                'lib/assets/icons/user_icon.svg',
-                width: 20,
-                height: 20,
-                color: Colors.black,
-              ),
-            ),
-            label: '',
-          ),
-        ],
+  currentIndex: _selectedIndex,
+   onTap: (index) {
+  setState(() {
+    _selectedIndex = index;
+  });
+
+  if (index == 0) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const HomePage()), // <- your HomePage widget
+    );
+  } else if (index == 2) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const NotificationScreen()),
+    );
+  }
+},
+  selectedItemColor: Colors.black,
+  unselectedItemColor: Colors.black54,
+  showSelectedLabels: false,
+  showUnselectedLabels: false,
+  type: BottomNavigationBarType.fixed,
+  items: [
+    BottomNavigationBarItem(
+      icon: Padding(
+        padding: const EdgeInsets.only(top: 6.0),
+        child: SvgPicture.asset(
+          'lib/assets/icons/home_icon.svg',
+          width: 20,
+          height: 20,
+          color: Colors.black,
+        ),
       ),
+      label: '',
+    ),
+    BottomNavigationBarItem(
+      icon: Padding(
+        padding: const EdgeInsets.only(top: 6.0),
+        child: SvgPicture.asset(
+          'lib/assets/icons/favorite_icon.svg',
+          width: 20,
+          height: 20,
+          color: Colors.black,
+        ),
+      ),
+      label: '',
+    ),
+    BottomNavigationBarItem(
+      icon: Padding(
+        padding: const EdgeInsets.only(top: 6.0),
+        child: SvgPicture.asset(
+          'lib/assets/icons/hallow_notification.svg',
+          width: 20,
+          height: 20,
+          color: Colors.black,
+        ),
+      ),
+      label: '',
+    ),
+    BottomNavigationBarItem(
+      icon: Padding(
+        padding: const EdgeInsets.only(top: 6.0),
+        child: SvgPicture.asset(
+          'lib/assets/icons/user_icon.svg',
+          width: 20,
+          height: 20,
+          color: Colors.black,
+        ),
+      ),
+      label: '',
+    ),
+  ],
+)
+
+
     );
   }
 

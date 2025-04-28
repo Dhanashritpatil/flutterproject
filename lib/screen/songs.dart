@@ -147,6 +147,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'notification.dart';
+import 'home.dart';
+import 'user.dart';
 
 class SongsScreen extends StatefulWidget {
   @override
@@ -232,13 +236,10 @@ class _SongsScreenState extends State<SongsScreen> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
-        leading: Icon(Icons.arrow_back, color: Colors.black),
         actions: [
           PopupMenuButton<String>(
             icon: Icon(Icons.more_vert, color: Colors.black),
-            onSelected: (value) {
-              print("Selected: $value");
-            },
+            onSelected: (value) => print("Selected: $value"),
             itemBuilder: (BuildContext context) {
               return ['1', '2', '3'].map((String choice) {
                 return PopupMenuItem<String>(
@@ -263,45 +264,124 @@ class _SongsScreenState extends State<SongsScreen> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
-        onTap: (index) => setState(() => _selectedIndex = index),
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.black54,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home, color: Colors.black), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite_border, color: Colors.black), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.notifications_none, color: Colors.black), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.person_outline, color: Colors.black), label: ''),
-        ],
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+
+          if (index == 2) {
+            // Open Notification screen when bell is tapped
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const NotificationScreen()),
+            );
+          }
+          // Optionally handle other indices (Home, Favorites, Profile)
+          else if (index == 0) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const HomePage()),
+            );
+          } else if (index == 3) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ProfileCard()),
+            );
+          }
+        },
+  selectedItemColor: Colors.black,
+  unselectedItemColor: Colors.black54,
+  showSelectedLabels: false,
+  showUnselectedLabels: false,
+  type: BottomNavigationBarType.fixed,
+  items: [
+    BottomNavigationBarItem(
+      icon: Padding(
+        padding: const EdgeInsets.only(top: 6.0),
+        child: SvgPicture.asset(
+          'lib/assets/icons/home_icon.svg',
+          width: 20,
+          height: 20,
+          color: Colors.black,
+        ),
       ),
+      label: '',
+    ),
+    BottomNavigationBarItem(
+      icon: Padding(
+        padding: const EdgeInsets.only(top: 6.0),
+        child: SvgPicture.asset(
+          'lib/assets/icons/favorite_icon.svg',
+          width: 20,
+          height: 20,
+          color: Colors.black,
+        ),
+      ),
+      label: '',
+    ),
+    BottomNavigationBarItem(
+      icon: Padding(
+        padding: const EdgeInsets.only(top: 6.0),
+        child: SvgPicture.asset(
+          'lib/assets/icons/hallow_notification.svg',
+          width: 20,
+          height: 20,
+          color: Colors.black,
+        ),
+      ),
+      label: '',
+    ),
+    BottomNavigationBarItem(
+      icon: Padding(
+        padding: const EdgeInsets.only(top: 6.0),
+        child: SvgPicture.asset(
+          'lib/assets/icons/user_icon.svg',
+          width: 20,
+          height: 20,
+          color: Colors.black,
+        ),
+      ),
+      label: '',
+    ),
+  ],
+),
+
+
     );
   }
 
   Widget _buildSearchBar() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(30),
-        boxShadow: [BoxShadow(blurRadius: 6, color: Colors.black12)],
-      ),
-      child: Row(
-        children: [
-          Icon(Icons.search, color: Colors.deepOrange),
-          SizedBox(width: 10),
-          Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: "Search...",
-                border: InputBorder.none,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+      child: TextField(
+        decoration: InputDecoration(
+          prefixIcon: const Icon(Icons.search, color: Colors.deepOrange),
+          suffixIcon: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.filter_alt_outlined),
+                onPressed: () {
+                  print("Filter tapped");
+                },
               ),
-            ),
+              IconButton(
+                icon: const Icon(Icons.sort),
+                onPressed: () {
+                  print("Sort tapped");
+                },
+              ),
+            ],
           ),
-          Icon(Icons.filter_list, color: Colors.grey),
-          SizedBox(width: 10),
-          Icon(Icons.sort, color: Colors.grey),
-        ],
+          hintText: "Search...",
+          filled: true,
+          fillColor: Colors.white,
+          contentPadding: const EdgeInsets.symmetric(vertical: 0),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(16),
+            borderSide: BorderSide.none,
+          ),
+        ),
       ),
     );
   }
@@ -320,7 +400,9 @@ class _SongsScreenState extends State<SongsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
+                Text(title,
+                    style:
+                        TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
                 SizedBox(height: 4),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -328,7 +410,11 @@ class _SongsScreenState extends State<SongsScreen> {
                     color: Colors.orange.shade100,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Text("22 MIN", style: TextStyle(color: Colors.deepOrange, fontWeight: FontWeight.bold, fontSize: 12)),
+                  child: Text("22 MIN",
+                      style: TextStyle(
+                          color: Colors.deepOrange,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12)),
                 )
               ],
             ),
@@ -352,4 +438,3 @@ class _SongsScreenState extends State<SongsScreen> {
     );
   }
 }
-

@@ -32,6 +32,7 @@ dependencies:
 
   shimmer: ^3.0.0
   flutter_svg: ^2.0.7
+ 
   
 
 
@@ -86,6 +87,12 @@ flutter:
     - lib/assets/icons/favorite_icon.svg
     - lib/assets/icons/insta_icon.svg
     - lib/assets/icons/whatsapp_icon.svg
+    - lib/assets/icons/solid_home.svg
+    - lib/assets/icons/solid_user.svg
+    - lib/assets/icons/soild_heart.svg
+    - lib/assets/icons/fill_notification.svg
+    - lib/assets/logo/church_konnect.png  
+    - lib/assets/logo/church_konnect.png  
 
 
   

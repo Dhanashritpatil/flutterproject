@@ -171,6 +171,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shimmer/shimmer.dart'; // Add shimmer package
+import 'notification.dart';
+import 'home.dart';
+import 'user.dart';
 
 class ChurchDetailScreen extends StatefulWidget {
   @override
@@ -179,6 +182,7 @@ class ChurchDetailScreen extends StatefulWidget {
 
 class _ChurchDetailScreenState extends State<ChurchDetailScreen> {
   bool _isLoading = true;
+    int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -199,26 +203,48 @@ class _ChurchDetailScreenState extends State<ChurchDetailScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
-        ),
-        actions: [
+         actions: [
           PopupMenuButton<String>(
             icon: Icon(Icons.more_vert, color: Colors.black),
-            onSelected: (value) {
-              // Handle menu selection
-              print('Selected: $value');
+            onSelected: (value) => print("Selected: $value"),
+            itemBuilder: (BuildContext context) {
+              return ['1', '2', '3'].map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
             },
-            itemBuilder: (context) => [
-              PopupMenuItem(value: '1', child: Text('Option 1')),
-              PopupMenuItem(value: '2', child: Text('Option 2')),
-              PopupMenuItem(value: '3', child: Text('Option 3')),
-            ],
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
+     bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+
+          if (index == 2) {
+            // Open Notification screen when bell is tapped
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const NotificationScreen()),
+            );
+          }
+          // Optionally handle other indices (Home, Favorites, Profile)
+          else if (index == 0) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const HomePage()),
+            );
+          } else if (index == 3) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ProfileCard()),
+            );
+          }
+        },
         selectedItemColor: Colors.black,
         unselectedItemColor: Colors.black54,
         showSelectedLabels: false,

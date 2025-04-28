@@ -769,3 +769,7 @@ class DailyMannaDetailScreen extends StatelessWidget {
     );
   }
 }
+
+
+
+

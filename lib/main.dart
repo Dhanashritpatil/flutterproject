@@ -16,6 +16,8 @@ import 'screen/songs.dart';
 import 'screen/holy_bible.dart';
 import 'screen/daily_manna.dart';
 import 'screen/video.dart';
+import 'screen/main_scafold.dart';
+import 'screen/user.dart';
 
 void main() {
   runApp(const MyApp());
@@ -39,20 +41,23 @@ class MyApp extends StatelessWidget {
         '/': (context) => const AuthScreen(),
         '/home': (context) => HomePage(),
         '/notifications': (context) => const NotificationScreen(),
-        '/events': (context) =>  EventsPage(),
-        '/paster': (context) =>  AddChurchScreen(),
-        '/prayer': (context) =>  PrayerRequestScreen(),
-        '/charch': (context) =>  ChurchLocatorScreen(),
+        '/events': (context) => EventsPage(),
+        '/paster': (context) => AddChurchScreen(),
+        '/prayer': (context) => PrayerRequestScreen(),
+        '/charch': (context) => ChurchLocatorScreen(),
         '/recpite': (context) => const ReceiptScreen(),
-        '/donation': (context) => DonationsScreen(),
+        '/donation': (context) => DonatePage(),
         '/kidscorner': (context) => KidsCornerScreen(),
-        '/referrs': (context) =>  ReferAndEarnScreen(),
-        '/songbook ': (context) => const SongBookScreen(),
-        '/church': (context) =>  ChurchDetailScreen(),
-        '/songs': (context) =>  SongsScreen(),
-        '/holybible': (context) => HolyBibleScreen (),
+        '/referrs': (context) => ReferAndEarnScreen(),
+        '/songbook': (context) => SongBookScreen(),
+        '/church': (context) => ChurchDetailScreen(),
+        '/songs': (context) => SongsScreen(),
+        '/holybible': (context) => HolyBibleScreen(),
         '/dailymanna': (context) => DailyMannaScreen(),
-        '/videos': (context) => VideosPage()
+        '/videos': (context) => VideosPage(),
+        '/mainscafold': (context) => MainScaffold(),
+        '/receipt': (context) => ReceiptScreen(),
+        '/user': (context) => ProfileCard()
       },
     );
   }
