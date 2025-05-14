@@ -1339,7 +1339,7 @@ class _DonatePageState extends State<DonatePage> {
           } else if (index == 3) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ProfileCard()),
+              MaterialPageRoute(builder: (context) => ProfileScreens()),
             );
           }
         },

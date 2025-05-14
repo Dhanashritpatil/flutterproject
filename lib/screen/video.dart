@@ -526,7 +526,7 @@ class _VideosPageState extends State<VideosPage> {
           } else if (index == 3) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ProfileCard()),
+              MaterialPageRoute(builder: (context) => ProfileScreens()),
             );
           }
         },

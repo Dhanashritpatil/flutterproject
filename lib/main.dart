@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screen/auth_screen.dart';
+import 'package:Church_Konnect/screen/auth_screen.dart';
 import 'screen/notification.dart';
 import 'screen/event.dart';
 import 'screen/paster.dart';
@@ -50,14 +50,14 @@ class MyApp extends StatelessWidget {
         '/kidscorner': (context) => KidsCornerScreen(),
         '/referrs': (context) => ReferAndEarnScreen(),
         '/songbook': (context) => SongBookScreen(),
-        '/church': (context) => ChurchDetailScreen(),
+        '/church': (context) => ChurchDetailsScreen(),
         '/songs': (context) => SongsScreen(),
         '/holybible': (context) => HolyBibleScreen(),
         '/dailymanna': (context) => DailyMannaScreen(),
         '/videos': (context) => VideosPage(),
         '/mainscafold': (context) => MainScaffold(),
         '/receipt': (context) => ReceiptScreen(),
-        '/user': (context) => ProfileCard()
+        '/user': (context) => ProfileScreen()
       },
     );
   }

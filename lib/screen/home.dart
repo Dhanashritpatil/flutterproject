@@ -505,10 +505,7 @@
 //   }
 // }
 
-
-
 //----------------old code--------------
-
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -526,14 +523,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int? _hoveredIndex;
- int _selectedIndex = 0;
+  int _selectedIndex = 0;
 
   final List<_GridItem> gridItems = [
     _GridItem("Church Location", Icons.location_on, '/charch'),
     _GridItem(
         "Holy Bible Access,Interactive study", Icons.menu_book, '/holybible'),
-    _GridItem(
-        "Daily Manna,Prayer,and Confessions", Icons.book, '/dailymanna'),
+    _GridItem("Daily Manna,Prayer,and Confessions", Icons.book, '/dailymanna'),
     _GridItem("Prayer Requests", Icons.message, '/prayer'),
     _GridItem("Songs Book", Icons.library_music, '/songbook'),
     _GridItem("Videos", Icons.video_library, '/videos'),
@@ -553,10 +549,11 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     body: CustomScrollView(
+      body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            expandedHeight: 0.0, // No expanded height to allow scrolling with content
+            expandedHeight:
+                0.0, // No expanded height to allow scrolling with content
             floating: false,
             pinned: true,
             backgroundColor: Colors.white,
@@ -577,7 +574,8 @@ class _HomePageState extends State<HomePage> {
                     itemCount: gridItems.length,
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       mainAxisSpacing: 10,
                       crossAxisSpacing: 10,
@@ -600,39 +598,43 @@ class _HomePageState extends State<HomePage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => ComingSoonPage(title: 'Christian Matrimony'),
+                                  builder: (context) => ComingSoonPage(
+                                      title: 'Christian Matrimony'),
                                 ),
                               );
-                             } else if (item.title == 'Bible Quiz') {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ComingSoonPage(title: 'Bible Quize'),
-      ),
-    );
-  } else if (item.title == 'Ask Bible TH') {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ComingSoonPage(title: 'Ask Bibile TH'),
-      ),
-    );
-  } else if (item.title == 'Christian Shopping') {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ComingSoonPage(title: 'Christian Shopping'),
-      ),
-    );
-  } 
-  else if (item.title == 'Bible School') {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ComingSoonPage(title: 'Bible School'),
-      ),
-    );
-  } 
+                            } else if (item.title == 'Bible Quiz') {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      ComingSoonPage(title: 'Bible Quize'),
+                                ),
+                              );
+                            } else if (item.title == 'Ask Bible TH') {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      ComingSoonPage(title: 'Ask Bibile TH'),
+                                ),
+                              );
+                            } else if (item.title == 'Christian Shopping') {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ComingSoonPage(
+                                      title: 'Christian Shopping'),
+                                ),
+                              );
+                            } else if (item.title == 'Bible School') {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      ComingSoonPage(title: 'Bible School'),
+                                ),
+                              );
+                            }
                             // Handle other navigation cases here
                           },
                           child: AnimatedContainer(
@@ -654,7 +656,8 @@ class _HomePageState extends State<HomePage> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(item.icon, size: 30, color: Colors.deepOrange),
+                                Icon(item.icon,
+                                    size: 30, color: Colors.deepOrange),
                                 const SizedBox(height: 4),
                                 Text(
                                   item.title,
@@ -674,7 +677,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-     bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: (index) {
           setState(() {
@@ -685,7 +688,8 @@ class _HomePageState extends State<HomePage> {
             // Open Notification screen when bell is tapped
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const NotificationScreen()),
+              MaterialPageRoute(
+                  builder: (context) => const NotificationScreen()),
             );
           }
           // Optionally handle other indices (Home, Favorites, Profile)
@@ -697,7 +701,7 @@ class _HomePageState extends State<HomePage> {
           } else if (index == 3) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ProfileCard()),
+              MaterialPageRoute(builder: (context) => ProfileScreens()),
             );
           }
         },

@@ -364,7 +364,7 @@ class _PrayerRequestScreenState extends State<PrayerRequestScreen> {
           } else if (index == 3) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ProfileCard()),
+              MaterialPageRoute(builder: (context) => ProfileScreens()),
             );
           }
         },

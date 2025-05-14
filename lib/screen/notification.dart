@@ -729,7 +729,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           } else if (index == 3) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ProfileCard()),
+              MaterialPageRoute(builder: (context) => ProfileScreens()),
             );
           }
         },
@@ -767,7 +767,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       icon: Padding(
         padding: const EdgeInsets.only(top: 6.0),
         child: SvgPicture.asset(
-          'lib/assets/icons/hallow_notification.svg',
+          'lib/assets/icons/fill_notification.svg',
           width: 20,
           height: 20,
           color: Colors.black,

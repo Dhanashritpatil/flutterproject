@@ -223,7 +223,7 @@ class _PrayerRequestPageState extends State<PrayerRequestPage> {
             // Navigate to Profile
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ProfileCard()),
+              MaterialPageRoute(builder: (context) => ProfileScreens()),
             );
           }
         },

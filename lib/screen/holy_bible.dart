@@ -339,7 +339,7 @@
 
 //----------------reviced code-------------------------
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screen/home.dart';
+import 'package:Church_Konnect/screen/home.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shimmer/shimmer.dart'; // Add shimmer package to pubspec.yaml
 
@@ -542,7 +542,7 @@ class _HolyBibleScreenState extends State<HolyBibleScreen> {
                 // Navigate to the Notification page
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ProfileCard()),
+                  MaterialPageRoute(builder: (context) => ProfileScreens()),
                 );
               },
             child: SvgPicture.asset(

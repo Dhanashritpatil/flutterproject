@@ -1,140 +1,114 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'edit_page.dart';
 import 'notification.dart';
-
 import 'home.dart';
 
-class ProfileCard extends StatefulWidget {
+class ProfileScreens extends StatefulWidget {
+  const ProfileScreens({super.key});
+
   @override
-  _ProfileCardState createState() => _ProfileCardState();
+  State<ProfileScreens> createState() => _ProfileScreensState();
 }
 
-class _ProfileCardState extends State<ProfileCard> {
-  int _selectedIndex = 0;
+class _ProfileScreensState extends State<ProfileScreens> {
+  int _selectedIndex = 3;
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
-      backgroundColor: Colors.grey[100],
-      body: Center(
-        child: Container(
-          width: 320,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 8,
-                offset: Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Header Section
-              Container(
-                height: 120,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.pinkAccent.shade100,
-                      Colors.orangeAccent.shade100,
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(16),
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Header with background and edit icon
+            Stack(
+              children: [
+                Container(
+                  height: size.height * 0.3,
+                  width: double.infinity,
+                  decoration: const BoxDecoration(
+                    color: Color(0xFFFFE1D5),
+                    borderRadius: BorderRadius.vertical(
+                      bottom: Radius.circular(40),
+                    ),
                   ),
                 ),
-                child: Stack(
-                  children: [
-                    Positioned(
-                      top: 16,
-                      left: 16,
-                      child: Text(
-                        'Profile',
+                Positioned(
+                  top: size.height * 0.06,
+                  left: 0,
+                  right: 0,
+                  child: Column(
+                    children: [
+                      const Text(
+                        "Profile",
                         style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ),
-                    Positioned(
-                      top: 16,
-                      right: 16,
-                      child: Icon(
-                        Icons.edit,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: CircleAvatar(
-                        radius: 48,
-                        backgroundColor: Colors.white,
-                        child: CircleAvatar(
-                          radius: 44,
-                          backgroundImage: AssetImage(
-                              'assets/profile.jpg'), // Replace with your image
+                      const SizedBox(height: 10),
+                      const CircleAvatar(
+                        radius: 50,
+                        backgroundImage: AssetImage(
+                          'lib/assets/images/user.jpg',
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-
-              // Information Section
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-                child: Column(
-                  children: [
-                    InfoRow(
-                        icon: Icons.person, label: 'Name', value: 'Amy Young'),
-                    SizedBox(height: 16),
-                    InfoRow(
-                        icon: Icons.female, label: 'Gender', value: 'Female'),
-                    SizedBox(height: 16),
-                    InfoRow(
-                        icon: Icons.phone,
-                        label: 'Phone',
-                        value: '+98 1245560090'),
-                    SizedBox(height: 16),
-                    InfoRow(
-                        icon: Icons.email,
-                        label: 'E-Mail',
-                        value: 'amyoung@random.com'),
-                  ],
+                Positioned(
+                  top: size.height * 0.06,
+                  right: 20,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const EditProfilePage()),
+                      );
+                    },
+                    child: const Icon(Icons.edit, size: 20),
+                  ),
                 ),
-              ),
-
-              // Logout Button
-              Padding(
-                padding: const EdgeInsets.all(16),
+              ],
+            ),
+            const SizedBox(height: 30),
+            _buildInfoTile(Icons.person, "Name", "Amy Young"),
+            _buildInfoTile(Icons.apartment, "Gender", "Female"),
+            _buildInfoTile(Icons.call, "Phone no.", "+98 1245560090"),
+            _buildInfoTile(Icons.email, "E-Mail", "amyoung@random.com"),
+            const SizedBox(height: 30),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: SizedBox(
+                width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepOrange,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
                   ),
-                  child: Text(
-                    'LOGOUT',
+                  onPressed: () {
+                    // logout logic here
+                  },
+                  child: const Text(
+                    "LOGOUT",
                     style: TextStyle(
+                      letterSpacing: 1,
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+            const SizedBox(height: 20),
+          ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -144,24 +118,21 @@ class _ProfileCardState extends State<ProfileCard> {
             _selectedIndex = index;
           });
 
-          if (index == 2) {
-            // Open Notification screen when bell is tapped
+          if (index == 0) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const HomePage()),
+            );
+          } else if (index == 2) {
             Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => const NotificationScreen()),
             );
-          }
-          // Optionally handle other indices (Home, Favorites, Profile)
-          else if (index == 0) {
+          } else if (index == 3) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const HomePage()),
-            );
-          } else if (index == 3) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ProfileCard()),
+              MaterialPageRoute(builder: (context) => const ProfileScreens()),
             );
           }
         },
@@ -211,7 +182,7 @@ class _ProfileCardState extends State<ProfileCard> {
             icon: Padding(
               padding: const EdgeInsets.only(top: 6.0),
               child: SvgPicture.asset(
-                'lib/assets/icons/user_icon.svg',
+                'lib/assets/icons/solid_user.svg',
                 width: 20,
                 height: 20,
                 color: Colors.black,
@@ -223,41 +194,35 @@ class _ProfileCardState extends State<ProfileCard> {
       ),
     );
   }
-}
 
-class InfoRow extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final String value;
-
-  InfoRow({required this.icon, required this.label, required this.value});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon, color: Colors.grey),
-        SizedBox(width: 16),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              label,
-              style: TextStyle(
-                color: Colors.grey,
-                fontWeight: FontWeight.w500,
-              ),
+  Widget _buildInfoTile(IconData icon, String title, String subtitle) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 8),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: const BoxDecoration(
+              color: Color(0xFFF5F5F5),
+              shape: BoxShape.circle,
             ),
-            Text(
-              value,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ],
-        ),
-      ],
+            child: Icon(icon, size: 24, color: Colors.black),
+          ),
+          const SizedBox(width: 20),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(title,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 14)),
+              const SizedBox(height: 2),
+              Text(subtitle,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.normal, fontSize: 14)),
+            ],
+          )
+        ],
+      ),
     );
   }
 }

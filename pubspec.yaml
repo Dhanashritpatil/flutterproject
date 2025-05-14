@@ -1,5 +1,5 @@
-name: flutter_application_1
-description: "A new Flutter project."
+name: Church_Konnect
+description: "Church app for everyone"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -33,6 +33,7 @@ dependencies:
   shimmer: ^3.0.0
   flutter_svg: ^2.0.7
  
+
   
 
 
@@ -82,8 +83,10 @@ flutter:
     - lib/assets/images/church_image.png
     - lib/assets/icons/prayer-petition.png
     - lib/assets/icons/hallow_notification.svg
+    - lib/assets/icons/fill_notification.svg
     - lib/assets/icons/home_icon.svg
     - lib/assets/icons/user_icon.svg
+    - lib/assets/icons/solid_user.svg
     - lib/assets/icons/favorite_icon.svg
     - lib/assets/icons/insta_icon.svg
     - lib/assets/icons/whatsapp_icon.svg
@@ -92,7 +95,7 @@ flutter:
     - lib/assets/icons/soild_heart.svg
     - lib/assets/icons/fill_notification.svg
     - lib/assets/logo/church_konnect.png  
-    - lib/assets/logo/church_konnect.png  
+   
 
 
   
